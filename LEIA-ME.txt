@@ -1,0 +1,26 @@
+MISSÃO CORPO HUMANO — PWA OFFLINE
+
+Conteúdo:
+- Jogo de plataforma lateral com controles de teclado e toque.
+- Coleta de coração, pulmões, estômago e intestinos.
+- Estação final de encaixe por arrastar e soltar.
+- PWA instalável e cache offline.
+- Sem bibliotecas externas.
+
+COMO TESTAR NO COMPUTADOR
+1. Não abra apenas o index.html por duplo clique se quiser testar o modo PWA/offline.
+2. Sirva a pasta por HTTP. Exemplo com Python:
+   python -m http.server 8000
+3. Abra http://localhost:8000
+
+COMO PUBLICAR NO GITHUB PAGES
+1. Envie todos os arquivos e a pasta assets/ para a raiz do repositório.
+2. Ative GitHub Pages para a branch usada.
+3. Abra o endereço HTTPS publicado.
+4. No Android/Chrome, use o botão "Instalar app" quando aparecer.
+
+CONTROLES
+- Teclado: setas ou A/D para andar; espaço/seta para cima para pular.
+- Celular/tablet: botões na tela.
+
+O jogo foi montado com os sprites e cenários fornecidos nesta conversa.

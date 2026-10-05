@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#0b67c8" />
+  <meta name="description" content="Jogo educativo infantil offline para encontrar e encaixar órgãos no corpo humano." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="assets/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Missão Corpo Humano</title>
+</head>
+<body>
+  <div id="app">
+    <section id="start-screen" class="screen active" aria-labelledby="game-title">
+      <div class="start-card">
+        <img class="hero-heart" src="assets/organs/heart.png" alt="Coração em estilo brinquedo" />
+        <div class="start-copy">
+          <p class="eyebrow">JOGO EDUCATIVO • 6+</p>
+          <h1 id="game-title">Missão Corpo Humano</h1>
+          <p>Explore o laboratório, encontre as quatro peças anatômicas e encaixe cada uma no lugar certo.</p>
+          <div class="start-actions">
+            <button id="play-btn" class="btn primary">▶ Jogar</button>
+            <button id="how-btn" class="btn secondary">? Como jogar</button>
+            <button id="install-btn" class="btn secondary" hidden>⬇ Instalar app</button>
+          </div>
+          <p class="offline-note">Funciona offline depois de instalado ou carregado uma vez.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-screen" class="screen" aria-labelledby="how-title">
+      <div class="modal-card instructions-card">
+        <h2 id="how-title">Como jogar</h2>
+        <div class="how-grid">
+          <div><span class="how-icon">⬅️➡️</span><strong>Mova</strong><small>Use as setas, A/D ou os botões na tela.</small></div>
+          <div><span class="how-icon">⬆️</span><strong>Pule</strong><small>Use espaço, seta para cima ou o botão de pulo.</small></div>
+          <div><span class="how-icon">✨</span><strong>Encontre</strong><small>Encoste nas peças brilhantes para guardá-las.</small></div>
+          <div><span class="how-icon">🧩</span><strong>Encaixe</strong><small>No final, arraste cada órgão para o lugar correto.</small></div>
+        </div>
+        <button id="how-back" class="btn primary">Voltar</button>
+      </div>
+    </section>
+
+    <section id="game-screen" class="screen game-screen" aria-label="Área do jogo">
+      <div id="game-shell">
+        <canvas id="game-canvas" width="1536" height="864" aria-label="Cenário do laboratório"></canvas>
+        <div id="hud">
+          <div id="objective" class="hud-pill">Encontre o coração</div>
+          <div id="inventory" class="inventory" aria-label="Peças encontradas">
+            <div class="inv-slot" data-organ="heart"><img src="assets/organs/heart.png" alt="Coração"><span>♡</span></div>
+            <div class="inv-slot" data-organ="lungs"><img src="assets/organs/lungs.png" alt="Pulmões"><span>♡</span></div>
+            <div class="inv-slot" data-organ="stomach"><img src="assets/organs/stomach.png" alt="Estômago"><span>♡</span></div>
+            <div class="inv-slot" data-organ="intestines"><img src="assets/organs/intestines.png" alt="Intestinos"><span>♡</span></div>
+          </div>
+          <div class="hud-actions">
+            <button id="sound-btn" class="round-btn" aria-label="Som ligado">🔊</button>
+            <button id="pause-btn" class="round-btn" aria-label="Pausar">⏸</button>
+          </div>
+        </div>
+        <div id="toast" role="status" aria-live="polite"></div>
+        <div id="touch-controls" aria-label="Controles do jogo">
+          <div class="move-controls">
+            <button id="left-btn" class="control-btn" aria-label="Mover para esquerda">◀</button>
+            <button id="right-btn" class="control-btn" aria-label="Mover para direita">▶</button>
+          </div>
+          <button id="jump-btn" class="control-btn jump" aria-label="Pular">⬆</button>
+        </div>
+        <div id="rotate-tip">↻ Para jogar melhor, vire o aparelho na horizontal.</div>
+      </div>
+    </section>
+
+    <section id="assembly-screen" class="screen assembly-screen" aria-labelledby="assembly-title">
+      <header class="assembly-header">
+        <div>
+          <p class="eyebrow">ESTAÇÃO DE MONTAGEM</p>
+          <h2 id="assembly-title">Encaixe as peças no corpo</h2>
+          <p>Arraste cada órgão até a região correta.</p>
+        </div>
+        <button id="assembly-help" class="round-btn" aria-label="Repetir instrução">🔊</button>
+      </header>
+      <div id="assembly-area">
+        <div id="organ-tray" aria-label="Peças para encaixar">
+          <h3>Suas peças</h3>
+          <div class="tray-items">
+            <button class="organ-card" data-organ="lungs"><img src="assets/organs/lungs.png" alt="Pulmões"><span>Pulmões</span></button>
+            <button class="organ-card" data-organ="heart"><img src="assets/organs/heart.png" alt="Coração"><span>Coração</span></button>
+            <button class="organ-card" data-organ="stomach"><img src="assets/organs/stomach.png" alt="Estômago"><span>Estômago</span></button>
+            <button class="organ-card" data-organ="intestines"><img src="assets/organs/intestines.png" alt="Intestinos"><span>Intestinos</span></button>
+          </div>
+        </div>
+        <div id="body-wrap">
+          <img id="body-base" src="assets/body/body_base.png" alt="Boneco-base para encaixe dos órgãos" />
+          <div class="target-zone" data-organ="lungs" style="--x:50%;--y:35%;--w:29%;"><span>Pulmões</span></div>
+          <div class="target-zone" data-organ="heart" style="--x:53%;--y:40%;--w:17%;"><span>Coração</span></div>
+          <div class="target-zone" data-organ="stomach" style="--x:55%;--y:49%;--w:17%;"><span>Estômago</span></div>
+          <div class="target-zone" data-organ="intestines" style="--x:50%;--y:59%;--w:29%;"><span>Intestinos</span></div>
+        </div>
+      </div>
+      <div id="assembly-status" role="status" aria-live="polite">0 de 4 peças encaixadas</div>
+    </section>
+
+    <section id="win-screen" class="screen" aria-labelledby="win-title">
+      <div class="modal-card win-card">
+        <div class="trophy">🏆</div>
+        <h2 id="win-title">Corpo montado!</h2>
+        <p>Você encontrou e encaixou coração, pulmões, estômago e intestinos.</p>
+        <div class="stars">⭐ ⭐ ⭐</div>
+        <div class="start-actions">
+          <button id="replay-btn" class="btn primary">Jogar novamente</button>
+          <button id="home-btn" class="btn secondary">Tela inicial</button>
+        </div>
+      </div>
+      <div id="confetti" aria-hidden="true"></div>
+    </section>
+
+    <div id="pause-modal" class="overlay" hidden>
+      <div class="modal-card compact">
+        <h2>Jogo pausado</h2>
+        <button id="resume-btn" class="btn primary">Continuar</button>
+        <button id="restart-btn" class="btn secondary">Reiniciar fase</button>
+        <button id="pause-home-btn" class="btn secondary">Tela inicial</button>
+      </div>
+    </div>
+  </div>
+  <script src="game.js" defer></script>
+</body>
+</html>
